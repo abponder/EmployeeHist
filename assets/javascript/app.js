@@ -1,6 +1,4 @@
 $(document).ready(function(){
-  //  var employeeArray=[], name, role, startDate, monthlyRate, monthsWorked, totalBilled, dateAdded;
-
 ///////////////////////////////////////////////////////////////////////////
 
 // Initialize Firebase
@@ -13,7 +11,6 @@ var config = {
     messagingSenderId: "754382216001"
   };
   firebase.initializeApp(config);
-
 
   // Create a variable to reference the database.
   var database = firebase.database();
@@ -44,50 +41,24 @@ var config = {
 
       });
 
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////
-//*************************************************************************/
-
  // Firebase watcher + initial loader + order/limit HINT: .on("child_added"
- database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+ database.ref().orderByChild("dateAdded").limitToLast(20).on("child_added", function(snapshot) {
 
-    // storing the snapshot.val() in a variable for convenience
-//    database.ref().on("value", function(snapshot) {
+  
+    //Create a variable for snapshot.val()
     var emp = snapshot.val();
 
-//console.log("the Emp: " + emp.val());
+    //create table's <tobody>, adding class to <tobody>, constructing the table's <tr> and <td>
+    var tabod = $('<tbody>');
+    tabod.addClass('employeeTable');
+    tabod.append($("<tr>").html("<td>" + emp.name + "</td><td>" + emp.role + "</td><td>" + emp.startDate + "</td><td>" + emp.monthsWorked + "</td><td>" + emp.monthlyRate + "</td><td>" + emp.totalBilled + "</td></tr>"));
 
-    // Console.loging the last user's data
-    console.log("Name: " + emp.name);
-    console.log("Role: " + emp.role);
-    console.log("Salary: " + emp.monthlyRate);
-    console.log("totalBilled: " + emp.totalBilled);
-    console.log("Did it add to DB: " + dateAdded);
-
-    // Change the HTML to reflect
-    var content = "<tr> <td>" + emp.name + "</td><td>" + emp.role + "</td><td>" + emp.startDate + "</td><td>" + emp.monthsWorked + "</td><td>" + emp.monthlyRate + "</td><td>" + "</td><td>" + totalBilled + "</td> </tr>";
-
-console.log("var content is: " + content);
-
-    $("#employeeTable").html(content);
-    
-
+    //append the <tbody> to the table
+    $('.table').append(tabod);
 
     // Handle the errors
   }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
   });
-
-
-
-
-
-
-
 ///////// END OF DOCUMENT /////////////////
 });
