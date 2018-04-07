@@ -22,9 +22,23 @@ var config = {
         var role = $('#roleInput').val().trim();
         var startDate = $('#startDateInput').val().trim();
         var monthlyRate = $('#monthlyRateInput').val().trim();
-        //var now = new date();
+        //calculate time
+        //get curent time in milisecond from jan 1, 1970
+        var currentTime = Date.now();
+
+        //convert the startDate to miliseconds from jan 1, 1970
+        var startThen = Date.parse(startDate); 
+
+console.log('curent time passed is: ' + currentTime);
+console.log('time passed from startDate' + startThen);
+
+        //calculate length of time in miliseconds
+        var timeDifference = currentTime - startThen;
+
+        //convert the miliseconds to months
+        var monthsWorked = Math.round((timeDifference / [(1000*60*60*24*365.25)/12]));
+
         //calculate totalBilled
-        var monthsWorked = 60; //now - startDate;
         var totalBilled = monthsWorked * monthlyRate;
 
         //submit to database
